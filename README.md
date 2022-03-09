@@ -1,4 +1,4 @@
-# Marlborge Reloaded
+# Marlborge Reloaded (Many bugs to fix)
 - Made for educational purposes only.
 - Botnet made based at the system of <a href="http://github.com/PR3C14D0/Marlborge">Marlborge Botnet</a>.
 
