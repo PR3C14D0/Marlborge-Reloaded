@@ -1,7 +1,9 @@
 ﻿  main.cpp
   Generando código
-  0 of 203 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+C:\Users\aaron\Desktop\Marlborge Reloaded\Marlborge Client\Marlborge Client\main.cpp(92): warning C4717: 'Listen': recursiva para todas las rutas de acceso de control; la función provocará el desbordamiento de la pila en tiempo de ejecución
+C:\Users\aaron\Desktop\Marlborge Reloaded\Marlborge Client\Marlborge Client\main.cpp(102): warning C4717: 'main': recursiva para todas las rutas de acceso de control; la función provocará el desbordamiento de la pila en tiempo de ejecución
+  4 of 202 functions ( 2.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+    1 functions had inline decision re-evaluated but remain unchanged
   Generación de código finalizada
   Marlborge Client.vcxproj -> C:\Users\aaron\Desktop\Marlborge Reloaded\Marlborge Client\Release\Marlborge Client.exe
