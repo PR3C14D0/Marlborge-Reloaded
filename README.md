@@ -1,7 +1,7 @@
 # Marlborge Reloaded
 - Made for educational purposes only.
 - Botnet made based at the system of <a href="http://github.com/PR3C14D0/Marlborge">Marlborge Botnet</a>.
-- [![License: CC0-1.0](https://licensebuttons.net/l/zero/1.0/80x15.png)](http://creativecommons.org/publicdomain/zero/1.0/)
+ [![License: CC0-1.0](https://licensebuttons.net/l/zero/1.0/80x15.png)](http://creativecommons.org/publicdomain/zero/1.0/)
 
 # Gallery
 <img src="./img/marlborge-reloaded-screenshot.png" width="579.5px" height="366.5px" />
