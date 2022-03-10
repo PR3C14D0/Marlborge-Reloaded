@@ -114,7 +114,7 @@ void Listen() {
 }
 
 int main() {
-	cout << "Marlborge Reloaded Client v0.5 (Chameleon)" << endl;
+	cout << "Marlborge Reloaded Client v0.6 (Chameleon)" << endl;
 	ConnectSocket();
 	Listen();
 	main();

@@ -3,6 +3,8 @@
 #include "DiscordThings.h"
 
 void DiscordThings::SpamDiscordWebhook(string webhook, string msg, int quantity) {
-	cpr::Post(cpr::Url{ webhook },
-			  cpr::Payload{ {"content", msg}});
+	for (int i = 0; i < quantity; i++) {
+		cpr::Post(cpr::Url{ webhook },
+			cpr::Payload{ {"content", msg} });
+	}
 }
