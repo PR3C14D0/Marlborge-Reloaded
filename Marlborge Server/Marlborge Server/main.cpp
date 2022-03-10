@@ -34,7 +34,6 @@ WSADATA wsaData;
 SOCKET sock;
 sockaddr_in saIn;
 int iResult;
-char buffer[1024];
 
 void RestartSock() {
 	closesocket(sock);
