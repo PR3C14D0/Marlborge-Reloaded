@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\Users\aaron\Desktop\Marlborge Reloaded\Marlborge Client\Marlborge Client\main.cpp(91): warning C4717: 'main': recursiva para todas las rutas de acceso de control; la función provocará el desbordamiento de la pila en tiempo de ejecución
+  Marlborge Client.vcxproj -> C:\Users\aaron\Desktop\Marlborge Reloaded\Marlborge Client\Debug\Marlborge Client.exe
